@@ -8,5 +8,15 @@ for(let ticket of tickets) {
 };
 
 function buttonClick() {
-	window.open("https://twitter.com/intent/tweet");
+	let title = this.getElementsByClassName("title")[0].querySelector("span").innerText;
+	let episodeNumber = this.getElementsByClassName("sub_title")[0].getElementsByClassName("count")[0].innerText;
+	let subTitle = this.getElementsByClassName("sub_title")[0].getElementsByClassName("sub_title")[0].innerText;
+	if (subTitle) {
+		subTitle = "「" + subTitle + "」";
+	}
+	const subTitleLink = this.getElementsByClassName("sub_title")[0].querySelector("a").getAttribute("href");
+
+	const text = title + "%20" + episodeNumber.replace("#", "＃") + "%20" + subTitle + "を見ました"
+			+ "%0Ahttp://animetick.net" + subTitleLink;
+	window.open("https://twitter.com/intent/tweet?text=" + text);
 }
