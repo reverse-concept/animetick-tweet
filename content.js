@@ -15,14 +15,30 @@ function buttonClick() {
 		subTitle = "「" + subTitle + "」";
 	}
 	const subTitleLink = this.getElementsByClassName("sub_title")[0].querySelector("a").getAttribute("href");
+	const animeId = subTitleLink.match(/ticket\/(.*)\//)[1];
 
 	const isChecked = this.querySelector("input").checked;
 	const isWatched = this.querySelector("button").className.includes("enable");
 
-	const text = title + "%20" + episodeNumber.replace("#", "＃") + "%20" + subTitle + "を見ました"
-			+ "%0Ahttp://animetick.net" + subTitleLink;
-	if (isChecked && !isWatched) {
-		// チェックが入っている かつ 視聴済みでない場合のみ実行
-		window.open("https://twitter.com/intent/tweet?text=" + text);
-	}
+	// anime個別ページからハッシュタグ情報とってくる
+	fetch("/anime/" + animeId)
+	.then((res) => res.text())
+	.then((htmlText) => {
+		let htmlDom = new DOMParser().parseFromString(htmlText, "text/html");
+		let hashTag = htmlDom.getElementsByClassName("hashtag")[0];
+		if (hashTag) {
+			// 「#」をすべて「%23」にエスケープするため、splitしてからjoinしている
+			hashTag = hashTag.innerText.split("#").join("%23");
+		} else {
+			hashTag = "";
+		}
+
+		const text = title + "%20" + episodeNumber.replace("#", "＃") + "%20" + subTitle + "を見ました"
+			+ hashTag + "%0Ahttp://animetick.net" + subTitleLink;
+
+	    if (isChecked && !isWatched) {
+	    	// チェックが入っている かつ 視聴済みでない場合のみ実行
+	    	window.open("https://twitter.com/intent/tweet?text=" + text);
+	    }
+	});
 }
