@@ -16,7 +16,13 @@ function buttonClick() {
 	}
 	const subTitleLink = this.getElementsByClassName("sub_title")[0].querySelector("a").getAttribute("href");
 
+	const isChecked = this.querySelector("input").checked;
+	const isWatched = this.querySelector("button").className.includes("enable");
+
 	const text = title + "%20" + episodeNumber.replace("#", "＃") + "%20" + subTitle + "を見ました"
 			+ "%0Ahttp://animetick.net" + subTitleLink;
-	window.open("https://twitter.com/intent/tweet?text=" + text);
+	if (isChecked && !isWatched) {
+		// チェックが入っている かつ 視聴済みでない場合のみ実行
+		window.open("https://twitter.com/intent/tweet?text=" + text);
+	}
 }
