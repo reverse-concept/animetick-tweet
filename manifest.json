@@ -5,16 +5,16 @@
 	"description": "AnimetickのWatchボタンを押した際に別タブでツイート画面を表示させる",
 	"content_scripts": [
 		{
-	 		"matches": ["http://animetick.net/*"],
-	    	"js": [
-	      		"content.js"
-	    	]
-	    },
+			"matches": ["http://animetick.net/*"],
+			"js": [
+				"content.js"
+			]
+		},
 		{
-	 		"matches": ["http://animetick.net/anime/*"],
-	    	"js": [
-	      		"individual.js"
-	    	]
-	    }
+			"matches": ["http://animetick.net/anime/*"],
+			"js": [
+				"individual.js"
+			]
+		}
 	]
 }
