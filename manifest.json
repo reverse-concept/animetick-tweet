@@ -6,15 +6,11 @@
 	"content_scripts": [
 		{
 			"matches": ["http://animetick.net/*"],
-			"js": [
-				"content.js"
-			]
+			"js": ["content.js"]
 		},
 		{
 			"matches": ["http://animetick.net/anime/*"],
-			"js": [
-				"individual.js"
-			]
+			"js": ["individual.js"]
 		}
 	]
 }
