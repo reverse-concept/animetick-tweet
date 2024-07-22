@@ -38,7 +38,7 @@ function buttonClick() {
 
 	    if (isChecked && !isWatched) {
 	    	// チェックが入っている かつ 視聴済みでない場合のみ実行
-	    	window.open("https://twitter.com/intent/tweet?text=" + text);
+	    	window.open("https://x.com/intent/post?text=" + text);
 	    }
 	});
 }
