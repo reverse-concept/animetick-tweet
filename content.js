@@ -27,18 +27,17 @@ function buttonClick() {
 		let htmlDom = new DOMParser().parseFromString(htmlText, "text/html");
 		let hashTag = htmlDom.getElementsByClassName("hashtag")[0];
 		if (hashTag) {
-			// 「#」をすべて「%23」にエスケープするため、splitしてからjoinしている
-			hashTag = hashTag.innerText.split("#").join("%23");
+			hashTag = hashTag.innerText.trim()
 		} else {
 			hashTag = "";
 		}
 
-		const text = title + "%20" + episodeNumber.replace("#", "＃") + "%20" + subTitle + "を見ました"
-			+ hashTag + "%0Ahttp://animetick.net" + subTitleLink;
+		const text = title + " " + episodeNumber.replace("#", "＃") + " " + subTitle + "を見ました　"
+			+ hashTag + "\n" + "http://animetick.net" + subTitleLink;
 
 	    if (isChecked && !isWatched) {
 	    	// チェックが入っている かつ 視聴済みでない場合のみ実行
-	    	window.open("https://twitter.com/intent/tweet?text=" + text);
+	    	window.open("https://x.com/intent/post?text=" + encodeURIComponent(text));
 	    }
 	});
 }
