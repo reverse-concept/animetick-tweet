@@ -33,7 +33,7 @@ function buttonClick() {
 		}
 
 		const text = title + " " + episodeNumber.replace("#", "＃") + " " + subTitle + "を見ました　"
-			+ hashTag + "\n" + "http://animetick.net" + subTitleLink;
+			+ hashTag + "\n" + "https://animetick.net" + subTitleLink;
 
 	    if (isChecked && !isWatched) {
 	    	// チェックが入っている かつ 視聴済みでない場合のみ実行

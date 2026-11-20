@@ -24,7 +24,7 @@ function buttonClick() {
 	}
 	const subTitleLink = this.getElementsByClassName("sub_title")[0].querySelector("a").getAttribute("href");
 
-	const text = title + " " + subTitle + "を見ました " + hashTag + "\n" + "http://animetick.net" + subTitleLink;
+	const text = title + " " + subTitle + "を見ました " + hashTag + "\n" + "https://animetick.net" + subTitleLink;
 
 	const isChecked = this.querySelector("input").checked;
 	const isWatched = this.getElementsByClassName("episode_watch button")[0].className.includes("enable");
