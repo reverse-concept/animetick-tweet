@@ -1,15 +1,15 @@
 {
 	"manifest_version": 3,
 	"name": "animetick-tweet",
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"description": "AnimetickのWatchボタンを押した際に別タブでツイート画面を表示させる",
 	"content_scripts": [
 		{
-			"matches": ["http://animetick.net/*"],
+			"matches": ["https://animetick.net/*"],
 			"js": ["content.js"]
 		},
 		{
-			"matches": ["http://animetick.net/anime/*"],
+			"matches": ["https://animetick.net/anime/*"],
 			"js": ["individual.js"]
 		}
 	]
