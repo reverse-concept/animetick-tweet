@@ -1,12 +1,6 @@
 const title = document.querySelector(".anime-info-bottom h2")?.innerText.trim() ?? "";
 const hashTag = document.querySelector(".hashtag")?.innerText.trim() ?? "";
 
-if (hashTag) {
-	hashTag = hashTag.innerText.trim();
-} else {
-	hashTag = "";
-}
-
 const episodes = document.getElementsByClassName("episode-block");
 for(let episode of episodes) {
 	let button = episode.getElementsByClassName("episode_watch button")[0];
@@ -28,7 +22,7 @@ function buttonClick() {
 		subTitle = subTitle.replace(" ", " 「") + "」";
 	}
 
-	const text = title + " " + subTitle + "を見ました " + hashTag + "\n" + "https://animetick.net" + subTitleLink;
+	const text = title + " " + subTitle + "を見ました " + hashTag + "\n" + subTitleLink;
 
 	const isChecked = this.querySelector("input").checked;
 	const isWatched = this.getElementsByClassName("episode_watch button")[0].className.includes("enable");
