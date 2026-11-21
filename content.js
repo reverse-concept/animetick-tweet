@@ -1,11 +1,29 @@
-const tickets = document.getElementsByClassName("ticket_relative ticket_mouse");
-for(let ticket of tickets) {
-	let button = ticket.querySelector("button");
-	if (button != null) {
-		// ボタンが存在する(=放送済みの作品)のみイベントを設置
-		button.addEventListener('click', buttonClick.bind(ticket), false);
-	}
-};
+const TICKET_SELECTOR = ".ticket_relative.ticket_mouse";
+const boundTickets = new WeakSet();
+
+function attach(ticket) {
+	if (boundTickets.has(ticket)) return;
+	const button = ticket.querySelector("button");
+	if (!button) return; // ボタンが存在する(=放送済みの作品)のみイベントを設置
+	boundTickets.add(ticket);
+	button.addEventListener("click", () => buttonClick.call(ticket), false);
+}
+
+document.querySelectorAll(TICKET_SELECTOR).forEach(attach);
+
+// 「もっと読み込む...」などで後から追加されたチケットにも対応
+const ticketList = document.getElementById("ticket_list");
+if (ticketList) {
+	new MutationObserver((mutations) => {
+		for (const mutation of mutations) {
+			for (const node of mutation.addedNodes) {
+				if (node.nodeType !== Node.ELEMENT_NODE) continue;
+				if (node.matches(TICKET_SELECTOR)) attach(node);
+				node.querySelectorAll(TICKET_SELECTOR).forEach(attach);
+			}
+		}
+	}).observe(ticketList, { childList: true, subtree: true });
+}
 
 async function buttonClick() {
 	const subTitleLink = this.querySelector(".sub_title > a")?.href;
