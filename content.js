@@ -7,7 +7,7 @@ for(let ticket of tickets) {
 	}
 };
 
-function buttonClick() {
+async function buttonClick() {
 	const subTitleLink = this.querySelector(".sub_title > a")?.href;
 	const animeId = subTitleLink?.match(/\/ticket\/(\d+)\//)?.[1];
 	if (!animeId) return;
@@ -19,29 +19,19 @@ function buttonClick() {
 	const isChecked = this.querySelector("input")?.checked;
 	const isWatched = this.querySelector("button").className.includes("enable");
 
-	// anime個別ページからハッシュタグ情報とってくる
-	fetch("/anime/" + animeId)
-	.then((res) => res.text())
-	.then((htmlText) => {
-		let htmlDom = new DOMParser().parseFromString(htmlText, "text/html");
-		let hashTag = htmlDom.getElementsByClassName("hashtag")[0];
-		if (hashTag) {
-			hashTag = hashTag.innerText.trim()
-		} else {
-			hashTag = "";
-		}
+	// anime個別ページからハッシュタグ情報をとってくる
+	const hashTag = await fetchHashTag(animeId);
 
-		const text = buildText({
-			title,
-			episode: episodeNumber.replace("#", "＃"),
-			subTitle,
-			hashTag,
-			url: subTitleLink,
-		});
-
-	    if (isChecked && !isWatched) {
-	    	// チェックが入っている かつ 視聴済みでない場合のみ実行
-	    	openTweet(text);
-	    }
+	const text = buildText({
+		title,
+		episode: episodeNumber.replace("#", "＃"),
+		subTitle,
+		hashTag,
+		url: subTitleLink,
 	});
+
+	if (isChecked && !isWatched) {
+		// チェックが入っている かつ 視聴済みでない場合のみ実行
+		openTweet(text);
+	}
 }

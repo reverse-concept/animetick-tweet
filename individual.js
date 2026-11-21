@@ -1,5 +1,5 @@
 const title = document.querySelector(".anime-info-bottom h2")?.innerText.trim() ?? "";
-const hashTag = document.querySelector(".hashtag")?.innerText.trim() ?? "";
+const hashTag = extractHashTag(document);
 
 const episodes = document.getElementsByClassName("episode-block");
 for(let episode of episodes) {

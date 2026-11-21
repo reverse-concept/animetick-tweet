@@ -14,3 +14,24 @@ function buildText({ title, episode, subTitle, hashTag, url }) {
 	const tag = hashTag ? TWEET_SEPARATOR + hashTag : "";
 	return head + watched + tag + "\n" + url;
 }
+
+const hashTagCache = new Map();
+
+function extractHashTag(root) {
+	return root.querySelector(".hashtag")?.textContent.trim() ?? "";
+}
+
+async function fetchHashTag(animeId) {
+	if (hashTagCache.has(animeId)) return hashTagCache.get(animeId);
+	try {
+		const res = await fetch("/anime/" + animeId);
+		if (!res.ok) return "";
+		const doc = new DOMParser().parseFromString(await res.text(), "text/html");
+		const hashTag = extractHashTag(doc);
+		hashTagCache.set(animeId, hashTag);
+		return hashTag;
+	} catch (e) {
+		console.error("animetick-tweet: ハッシュタグの取得に失敗しました", e);
+		return "";
+	}
+}
