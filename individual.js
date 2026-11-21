@@ -1,5 +1,6 @@
-const title = document.getElementsByClassName("anime-info-bottom")[0].querySelector("h2").innerText;
-let hashTag = document.getElementsByClassName("hashtag")[0];
+const title = document.querySelector(".anime-info-bottom h2")?.innerText.trim() ?? "";
+const hashTag = document.querySelector(".hashtag")?.innerText.trim() ?? "";
+
 if (hashTag) {
 	hashTag = hashTag.innerText.trim();
 } else {
@@ -17,12 +18,15 @@ for(let episode of episodes) {
 };
 
 function buttonClick() {
-	// 個別ページはサブタイトルのテキストに話数が含まれている
-	let subTitle = this.getElementsByClassName("sub_title")[0].querySelector("a").innerText;
+	const link = this.querySelector(".sub_title a");
+	if (!link) return;
+	const subTitleLink = link.href;
+
+	// 個別ページはリンクのテキストに話数が含まれている(例: "#7 サブタイトル")
+	let subTitle = link.innerText.trim().replace("#", "＃");
 	if (subTitle) {
-		subTitle = subTitle.replace("#", "＃").replace(" ", " 「") + "」";
+		subTitle = subTitle.replace(" ", " 「") + "」";
 	}
-	const subTitleLink = this.getElementsByClassName("sub_title")[0].querySelector("a").getAttribute("href");
 
 	const text = title + " " + subTitle + "を見ました " + hashTag + "\n" + "https://animetick.net" + subTitleLink;
 
