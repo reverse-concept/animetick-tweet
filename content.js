@@ -8,16 +8,18 @@ for(let ticket of tickets) {
 };
 
 function buttonClick() {
-	let title = this.getElementsByClassName("title")[0].querySelector("span").innerText;
-	let episodeNumber = this.getElementsByClassName("sub_title")[0].getElementsByClassName("count")[0].innerText;
-	let subTitle = this.getElementsByClassName("sub_title")[0].getElementsByClassName("sub_title")[0].innerText;
+	const subTitleLink = this.querySelector(".sub_title > a")?.href;
+	const animeId = subTitleLink?.match(/\/ticket\/(\d+)\//)?.[1];
+	if (!animeId) return;
+
+	const title = this.querySelector("div.title > span")?.innerText.trim() ?? "";
+	const episodeNumber = this.querySelector(".sub_title .count")?.innerText.trim() ?? "";
+	let subTitle = this.querySelector(".sub_title span.sub_title")?.innerText.trim() ?? "";
 	if (subTitle) {
 		subTitle = "「" + subTitle + "」";
 	}
-	const subTitleLink = this.getElementsByClassName("sub_title")[0].querySelector("a").getAttribute("href");
-	const animeId = subTitleLink.match(/ticket\/(.*)\//)[1];
 
-	const isChecked = this.querySelector("input").checked;
+	const isChecked = this.querySelector("input")?.checked;
 	const isWatched = this.querySelector("button").className.includes("enable");
 
 	// anime個別ページからハッシュタグ情報とってくる
