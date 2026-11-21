@@ -1,10 +1,5 @@
-const title = document.getElementsByClassName("anime-info-bottom")[0].querySelector("h2").innerText;
-let hashTag = document.getElementsByClassName("hashtag")[0];
-if (hashTag) {
-	hashTag = hashTag.innerText.trim();
-} else {
-	hashTag = "";
-}
+const title = document.querySelector(".anime-info-bottom h2")?.innerText.trim() ?? "";
+const hashTag = extractHashTag(document);
 
 const episodes = document.getElementsByClassName("episode-block");
 for(let episode of episodes) {
@@ -17,20 +12,20 @@ for(let episode of episodes) {
 };
 
 function buttonClick() {
-	// 個別ページはサブタイトルのテキストに話数が含まれている
-	let subTitle = this.getElementsByClassName("sub_title")[0].querySelector("a").innerText;
-	if (subTitle) {
-		subTitle = subTitle.replace("#", "＃").replace(" ", " 「") + "」";
-	}
-	const subTitleLink = this.getElementsByClassName("sub_title")[0].querySelector("a").getAttribute("href");
+	const link = this.querySelector(".sub_title a");
+	if (!link) return;
+	const subTitleLink = link.href;
 
-	const text = title + " " + subTitle + "を見ました " + hashTag + "\n" + "https://animetick.net" + subTitleLink;
+	// 個別ページはリンクのテキストに話数が含まれている(例: "#7 サブタイトル")
+	const [, episode, subTitle] = link.innerText.trim().replace("#", "＃").match(/^(\S+)\s*(.*)$/) ?? [];
+
+	const text = buildText({ title, episode, subTitle, hashTag, url: subTitleLink });
 
 	const isChecked = this.querySelector("input").checked;
 	const isWatched = this.getElementsByClassName("episode_watch button")[0].className.includes("enable");
 	if (isChecked && !isWatched) {
 		// チェックが入っている かつ 視聴済みでない場合のみ実行
-		window.open("https://x.com/intent/post?text=" + encodeURIComponent(text));
+		openTweet(text);
 	}
 }
 
