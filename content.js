@@ -14,10 +14,7 @@ function buttonClick() {
 
 	const title = this.querySelector("div.title > span")?.innerText.trim() ?? "";
 	const episodeNumber = this.querySelector(".sub_title .count")?.innerText.trim() ?? "";
-	let subTitle = this.querySelector(".sub_title span.sub_title")?.innerText.trim() ?? "";
-	if (subTitle) {
-		subTitle = "「" + subTitle + "」";
-	}
+	const subTitle = this.querySelector(".sub_title span.sub_title")?.innerText.trim() ?? "";
 
 	const isChecked = this.querySelector("input")?.checked;
 	const isWatched = this.querySelector("button").className.includes("enable");
@@ -34,8 +31,13 @@ function buttonClick() {
 			hashTag = "";
 		}
 
-		const text = title + " " + episodeNumber.replace("#", "＃") + " " + subTitle + "を見ました　"
-			+ hashTag + "\n" + subTitleLink;
+		const text = buildText({
+			title,
+			episode: episodeNumber.replace("#", "＃"),
+			subTitle,
+			hashTag,
+			url: subTitleLink,
+		});
 
 	    if (isChecked && !isWatched) {
 	    	// チェックが入っている かつ 視聴済みでない場合のみ実行

@@ -17,12 +17,9 @@ function buttonClick() {
 	const subTitleLink = link.href;
 
 	// 個別ページはリンクのテキストに話数が含まれている(例: "#7 サブタイトル")
-	let subTitle = link.innerText.trim().replace("#", "＃");
-	if (subTitle) {
-		subTitle = subTitle.replace(" ", " 「") + "」";
-	}
+	const [, episode, subTitle] = link.innerText.trim().replace("#", "＃").match(/^(\S+)\s*(.*)$/) ?? [];
 
-	const text = title + " " + subTitle + "を見ました " + hashTag + "\n" + subTitleLink;
+	const text = buildText({ title, episode, subTitle, hashTag, url: subTitleLink });
 
 	const isChecked = this.querySelector("input").checked;
 	const isWatched = this.getElementsByClassName("episode_watch button")[0].className.includes("enable");
