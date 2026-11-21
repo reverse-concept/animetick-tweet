@@ -39,7 +39,7 @@ function buttonClick() {
 
 	    if (isChecked && !isWatched) {
 	    	// チェックが入っている かつ 視聴済みでない場合のみ実行
-	    	window.open("https://x.com/intent/post?text=" + encodeURIComponent(text));
+	    	openTweet(text);
 	    }
 	});
 }

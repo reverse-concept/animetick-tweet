@@ -7,11 +7,11 @@
 		{
 			"matches": ["https://animetick.net/*"],
 			"exclude_matches": ["https://animetick.net/anime/*"],
-			"js": ["content.js"]
+			"js": ["common.js", "content.js"]
 		},
 		{
 			"matches": ["https://animetick.net/anime/*"],
-			"js": ["individual.js"]
+			"js": ["common.js", "individual.js"]
 		}
 	]
 }

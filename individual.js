@@ -34,7 +34,7 @@ function buttonClick() {
 	const isWatched = this.getElementsByClassName("episode_watch button")[0].className.includes("enable");
 	if (isChecked && !isWatched) {
 		// チェックが入っている かつ 視聴済みでない場合のみ実行
-		window.open("https://x.com/intent/post?text=" + encodeURIComponent(text));
+		openTweet(text);
 	}
 }
 
